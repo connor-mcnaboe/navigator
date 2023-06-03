@@ -1,27 +1,15 @@
-use actix_web::{App, HttpResponse, HttpServer, Responder};
+use actix_web::{App, HttpServer};
 use paperclip::actix::{
-    OpenApiExt, api_v2_operation, get, post
+    OpenApiExt
 };
-
-#[api_v2_operation]
-#[get("/")]
-async fn hello() -> impl Responder {
-    HttpResponse::Ok().body("Hello world!")
-}
-
-#[api_v2_operation]
-#[post("/echo")]
-async fn echo(req_body: String) -> impl Responder {
-    HttpResponse::Ok().body(req_body)
-}
+use navigator::app_config::config_app;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .wrap_api()
-            .service(hello)
-            .service(echo)
+            .configure(config_app)
             .with_json_spec_at("/api/spec/v2")
             .build()
     })
