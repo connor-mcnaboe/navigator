@@ -1,0 +1,23 @@
+name: navigator workflow
+run-name: ${{github.actor}} running navigator workflow
+on: [push]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: build
+        run: cargo build --verbose
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: test
+        run: cargo test --verbose
