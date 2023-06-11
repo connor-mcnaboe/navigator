@@ -1,11 +1,9 @@
+use actix_web::web;
 
-use paperclip::actix::web;
-
-use crate::services::hello_world_service::{hello, echo};
+use crate::controllers::mission_controller::{mission};
 
 pub fn config_app(cfg: &mut web::ServiceConfig) {
     cfg.service(
-        web::scope("")
-        .service(hello)
-        .service(echo));
+        web::scope("/mission")
+        .service(mission));
 }
